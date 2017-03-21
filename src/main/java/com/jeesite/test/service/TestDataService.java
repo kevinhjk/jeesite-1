@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jeesite.common.persistence.Page;
 import com.jeesite.common.service.CrudService;
-import com.jeesite.test.dao.TestDataDao;
 import com.jeesite.test.entity.TestData;
+import com.jeesite.test.dao.TestDataDao;
 
 /**
  * 单表生成Service

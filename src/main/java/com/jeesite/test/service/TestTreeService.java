@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jeesite.common.service.TreeService;
 import com.jeesite.common.utils.StringUtils;
-import com.jeesite.test.dao.TestTreeDao;
 import com.jeesite.test.entity.TestTree;
+import com.jeesite.test.dao.TestTreeDao;
 
 /**
  * 树结构生成Service
