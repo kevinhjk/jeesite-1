@@ -19,7 +19,7 @@ public class CodeCounter {
 	 * 代码行数统计
 	 */
 	public static void main(String[] args) {
-		String file = CodeCounter2.class.getResource("/").getFile();
+		String file = CodeCounter.class.getResource("/").getFile();
 		String path = file.replace("target/test-classes", "src");
 
 		ArrayList<File> al = getFile(new File(path));

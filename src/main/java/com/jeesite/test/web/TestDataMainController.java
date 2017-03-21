@@ -24,6 +24,7 @@ import com.jeesite.test.service.TestDataMainService;
 
 /**
  * 主子表生成Controller
+ * 
  * @author ThinkGem
  * @version 2015-04-06
  */
@@ -33,23 +34,24 @@ public class TestDataMainController extends BaseController {
 
 	@Autowired
 	private TestDataMainService testDataMainService;
-	
+
 	@ModelAttribute
-	public TestDataMain get(@RequestParam(required=false) String id) {
+	public TestDataMain get(@RequestParam(required = false) String id) {
 		TestDataMain entity = null;
-		if (StringUtils.isNotBlank(id)){
+		if (StringUtils.isNotBlank(id)) {
 			entity = testDataMainService.get(id);
 		}
-		if (entity == null){
+		if (entity == null) {
 			entity = new TestDataMain();
 		}
 		return entity;
 	}
-	
+
 	@RequiresPermissions("test:testDataMain:view")
-	@RequestMapping(value = {"list", ""})
-	public String list(TestDataMain testDataMain, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<TestDataMain> page = testDataMainService.findPage(new Page<TestDataMain>(request, response), testDataMain); 
+	@RequestMapping(value = { "list", "" })
+	public String list(TestDataMain testDataMain, HttpServletRequest request, HttpServletResponse response,
+			Model model) {
+		Page<TestDataMain> page = testDataMainService.findPage(new Page<TestDataMain>(request, response), testDataMain);
 		model.addAttribute("page", page);
 		return "jeesite/test/testDataMainList";
 	}
@@ -64,20 +66,20 @@ public class TestDataMainController extends BaseController {
 	@RequiresPermissions("test:testDataMain:edit")
 	@RequestMapping(value = "save")
 	public String save(TestDataMain testDataMain, Model model, RedirectAttributes redirectAttributes) {
-		if (!beanValidator(model, testDataMain)){
+		if (!beanValidator(model, testDataMain)) {
 			return form(testDataMain, model);
 		}
 		testDataMainService.save(testDataMain);
 		addMessage(redirectAttributes, "保存主子表成功");
-		return "redirect:"+Global.getAdminPath()+"/test/testDataMain/?repage";
+		return "redirect:" + Global.getAdminPath() + "/test/testDataMain/?repage";
 	}
-	
+
 	@RequiresPermissions("test:testDataMain:edit")
 	@RequestMapping(value = "delete")
 	public String delete(TestDataMain testDataMain, RedirectAttributes redirectAttributes) {
 		testDataMainService.delete(testDataMain);
 		addMessage(redirectAttributes, "删除主子表成功");
-		return "redirect:"+Global.getAdminPath()+"/test/testDataMain/?repage";
+		return "redirect:" + Global.getAdminPath() + "/test/testDataMain/?repage";
 	}
 
 }
