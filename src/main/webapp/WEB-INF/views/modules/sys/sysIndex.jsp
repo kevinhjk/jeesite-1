@@ -55,42 +55,64 @@
 						<div class="logo-element">jeegit</div>
 					</li>
 
+
 					<c:forEach items="${fns:getMenuList()}" var="menu"
 						varStatus="idxStatus">
 						<c:if test="${menu.parent.id eq '1'&&menu.isShow eq '1'}">
 							<li><c:if test="${empty menu.href}">
-								<a href="#" target="mainFrame"><i class="${not empty menu.icon ? menu.icon : 'fa fa-sitemap'}"></i><span class="nav-label">${menu.name}</span><span class="fa arrow"></span></a>
+									<a href="#"><i class="fa fa-sitemap"></i><span
+										class="nav-label">${menu.name}</span> <c:if
+											test="${menu.childCount>0}">
+											<span class="fa arrow"></span>
+										</c:if></a>
 
-<c:forEach items="${fns:getMenuList()}" var="menu2">
-<c:if test="${menu2.parent.id eq menu.id&&menu2.isShow eq '1'}">
-<a target="mainFrame" href="${fn:indexOf(menu2.href, '://') eq -1 ? ctx : ''}${not empty menu2.href ? menu2.href : '/404'}" id="damian">${menu2.name} <span class="fa arrow"></span></a>
 
-<c:forEach items="${fns:getMenuList()}" var="menu3">
-<c:if test="${menu3.parent.id eq menu2.id&&menu3.isShow eq '1'}">
-			
-                                    <li>
-                                        <a target="mainFrame" href="${fn:indexOf(menu3.href, '://') eq -1 ? ctx : ''}${not empty menu3.href ? menu3.href : '/404'}">${menu3.name}</a>
-                                    </li>
-                                   
-									
-</c:if> 
-</c:forEach>
+									<c:if test="${menu.childCount>0}">
 
-</c:if>
-</c:forEach>
+										<ul class="nav nav-second-level collapse">
+											<c:forEach items="${menuList}" var="menu2">
+												<c:if
+													test="${menu2.parent.id eq menu.id&&menu2.isShow eq '1'}">
+													<li><a target="mainFrame"
+														href="${fn:indexOf(menu2.href, '://') eq -1 ? ctx : ''}${not empty menu2.href ? menu2.href : '/404'}">${menu2.name}
+															<span class="fa arrow"></span>
+													</a> <c:if test="${menu2.childCount>0}">
+															<ul class="nav nav-third-level">
+																<c:forEach items="${menuList}" var="menu3">
+																	<c:if
+																		test="${menu3.parent.id eq menu2.id&&menu3.isShow eq '1'}">
+																		<li><a target="mainFrame"
+																			href="${fn:indexOf(menu3.href, '://') eq -1 ? ctx : ''}${not empty menu3.href ? menu3.href : '/404'}">${menu3.name}</a></li>
+																	</c:if>
+																</c:forEach>
+															</ul>
 
-								</c:if> 
-								<c:if test="${not empty menu.href}">
-                                 <a href="${fn:indexOf(menu.href, '://') eq -1 ? ctx : ''}${menu.href}"
-										target="mainFrame"><i class="fa fa-sitemap"></i><span class="nav-label">${menu.name}</span><span class="fa arrow"></span></a>
-									
-								</c:if>
-								</li>
+
+
+														</c:if></li>
+												</c:if>
+											</c:forEach>
+
+
+										</ul>
+
+									</c:if>
+
+
+
+
+								</c:if> <c:if test="${not empty menu.href}">
+									<a
+										href="${fn:indexOf(menu.href, '://') eq -1 ? ctx : ''}${menu.href}"
+										target="mainFrame"><i class="fa fa-sitemap"></i><span
+										class="nav-label">${menu.name}</span><span class="fa arrow"></span></a>
+
+								</c:if></li>
 						</c:if>
 					</c:forEach>
 
 
-				
+
 
 
 
@@ -108,7 +130,7 @@
 							href="#"><i class="fa fa-bars"></i></a>
 					</div>
 					<ul class="nav navbar-top-links navbar-right">
-						<li><a href="login.html"> <i class="fa fa-sign-out"></i>注销
+						<li><a href="${ctx}/logout"> <i class="fa fa-sign-out"></i>注销
 						</a></li>
 
 					</ul>
@@ -118,8 +140,8 @@
 			<div class="row J_mainContent" id="content-main"
 				style="height: calc(100% - 100px);">
 				<iframe class="J_iframe" id="mainFrame" name="mainFrame"
-					width="100%" height="100%" src="clients.html" frameborder="0"
-					data-id="index_v1.html" seamless></iframe>
+					width="100%" height="100%" src="clients.jsp" frameborder="0"
+					data-id="clients.jsp" seamless></iframe>
 			</div>
 
 			<div class="footer">

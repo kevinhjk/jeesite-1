@@ -16,34 +16,59 @@ import com.jeesite.common.persistence.DataEntity;
 
 /**
  * 菜单Entity
+ * 
  * @author ThinkGem
  * @version 2013-05-15
  */
 public class Menu extends DataEntity<Menu> {
 
 	private static final long serialVersionUID = 1L;
-	private Menu parent;	// 父级菜单
+	private Menu parent; // 父级菜单
 	private String parentIds; // 所有父级编号
-	private String name; 	// 名称
-	private String href; 	// 链接
-	private String target; 	// 目标（ mainFrame、_blank、_self、_parent、_top）
-	private String icon; 	// 图标
-	private Integer sort; 	// 排序
-	private String isShow; 	// 是否在菜单中显示（1：显示；0：不显示）
+	private String name; // 名称
+	private String href; // 链接
+	private String target; // 目标（ mainFrame、_blank、_self、_parent、_top）
+	private String icon; // 图标
+	private Integer sort; // 排序
+	private String isShow; // 是否在菜单中显示（1：显示；0：不显示）
 	private String permission; // 权限标识
+
+	private int deep;// 深度
+	private int childCount;//下级菜单个数
 	
+
+	public int getDeep() {
+		return deep;
+	}
+
+	public void setDeep(int deep) {
+		this.deep = deep;
+	}
+
+	
+	
+	public int getChildCount() {
+		return childCount;
+	}
+
+	public void setChildCount(int childCount) {
+		this.childCount = childCount;
+	}
+
+
+
 	private String userId;
-	
-	public Menu(){
+
+	public Menu() {
 		super();
 		this.sort = 30;
 		this.isShow = "1";
 	}
-	
-	public Menu(String id){
+
+	public Menu(String id) {
 		super(id);
 	}
-	
+
 	@JsonBackReference
 	@NotNull
 	public Menu getParent() {
@@ -54,7 +79,7 @@ public class Menu extends DataEntity<Menu> {
 		this.parent = parent;
 	}
 
-	@Length(min=1, max=2000)
+	@Length(min = 1, max = 2000)
 	public String getParentIds() {
 		return parentIds;
 	}
@@ -62,8 +87,8 @@ public class Menu extends DataEntity<Menu> {
 	public void setParentIds(String parentIds) {
 		this.parentIds = parentIds;
 	}
-	
-	@Length(min=1, max=100)
+
+	@Length(min = 1, max = 100)
 	public String getName() {
 		return name;
 	}
@@ -72,7 +97,7 @@ public class Menu extends DataEntity<Menu> {
 		this.name = name;
 	}
 
-	@Length(min=0, max=2000)
+	@Length(min = 0, max = 2000)
 	public String getHref() {
 		return href;
 	}
@@ -81,7 +106,7 @@ public class Menu extends DataEntity<Menu> {
 		this.href = href;
 	}
 
-	@Length(min=0, max=20)
+	@Length(min = 0, max = 20)
 	public String getTarget() {
 		return target;
 	}
@@ -89,8 +114,8 @@ public class Menu extends DataEntity<Menu> {
 	public void setTarget(String target) {
 		this.target = target;
 	}
-	
-	@Length(min=0, max=100)
+
+	@Length(min = 0, max = 100)
 	public String getIcon() {
 		return icon;
 	}
@@ -98,17 +123,17 @@ public class Menu extends DataEntity<Menu> {
 	public void setIcon(String icon) {
 		this.icon = icon;
 	}
-	
+
 	@NotNull
 	public Integer getSort() {
 		return sort;
 	}
-	
+
 	public void setSort(Integer sort) {
 		this.sort = sort;
 	}
-	
-	@Length(min=1, max=1)
+
+	@Length(min = 1, max = 1)
 	public String getIsShow() {
 		return isShow;
 	}
@@ -117,7 +142,7 @@ public class Menu extends DataEntity<Menu> {
 		this.isShow = isShow;
 	}
 
-	@Length(min=0, max=200)
+	@Length(min = 0, max = 200)
 	public String getPermission() {
 		return permission;
 	}
@@ -131,18 +156,17 @@ public class Menu extends DataEntity<Menu> {
 	}
 
 	@JsonIgnore
-	public static void sortList(List<Menu> list, List<Menu> sourcelist, String parentId, boolean cascade){
-		for (int i=0; i<sourcelist.size(); i++){
+	public static void sortList(List<Menu> list, List<Menu> sourcelist, String parentId, boolean cascade) {
+		for (int i = 0; i < sourcelist.size(); i++) {
 			Menu e = sourcelist.get(i);
-			if (e.getParent()!=null && e.getParent().getId()!=null
-					&& e.getParent().getId().equals(parentId)){
+			if (e.getParent() != null && e.getParent().getId() != null && e.getParent().getId().equals(parentId)) {
 				list.add(e);
-				if (cascade){
+				if (cascade) {
 					// 判断是否还有子节点, 有则继续获取子节点
-					for (int j=0; j<sourcelist.size(); j++){
+					for (int j = 0; j < sourcelist.size(); j++) {
 						Menu child = sourcelist.get(j);
-						if (child.getParent()!=null && child.getParent().getId()!=null
-								&& child.getParent().getId().equals(e.getId())){
+						if (child.getParent() != null && child.getParent().getId() != null
+								&& child.getParent().getId().equals(e.getId())) {
 							sortList(list, sourcelist, e.getId(), true);
 							break;
 						}
@@ -153,10 +177,10 @@ public class Menu extends DataEntity<Menu> {
 	}
 
 	@JsonIgnore
-	public static String getRootId(){
+	public static String getRootId() {
 		return "1";
 	}
-	
+
 	public String getUserId() {
 		return userId;
 	}
