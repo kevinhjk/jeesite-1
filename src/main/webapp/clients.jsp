@@ -50,19 +50,13 @@
 
 					</div>
 				</div>
-
-
 			</div>
-
-
-
-
 		</div>
 	</div>
 
 
 
-	</div>
+
 
 
 	<!-- Mainly scripts -->
